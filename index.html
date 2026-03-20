@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rift Social — Westlands, Nairobi</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,700;0,9..144,900;1,9..144,300;1,9..144,700&family=Manrope:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --night:#0e0a06;--deep:#1a1008;--warm:#2a1a0a;
+  --terra:#c4572a;--terra2:#d4693c;--gold:#c9952a;--amber:#e8a830;
+  --sand:#f2e4c8;--mist:#ede0c4;--cream:#f8f2e6;
+  --mid:rgba(242,228,200,0.55);--dim:rgba(242,228,200,0.25);
+  --serif:'Fraunces',Georgia,serif;--sans:'Manrope',system-ui,sans-serif;
+}
+html{scroll-behavior:smooth}
+body{background:var(--night);color:var(--sand);font-family:var(--sans);font-weight:300;line-height:1.7;overflow-x:hidden}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:1.4rem 3.5rem;transition:all 0.3s}
+nav.scrolled{background:rgba(14,10,6,0.97);backdrop-filter:blur(12px);border-bottom:1px solid rgba(201,149,42,0.15)}
+.nav-logo{font-family:var(--serif);font-size:1.5rem;font-weight:700;color:var(--sand);text-decoration:none;letter-spacing:0.05em}
+.nav-logo span{color:var(--terra)}
+.nav-links{display:flex;align-items:center;gap:2.5rem}
+.nav-links a{font-size:0.75rem;font-weight:400;letter-spacing:0.15em;text-transform:uppercase;color:var(--mid);text-decoration:none;transition:color 0.2s}
+.nav-links a:hover{color:var(--sand)}
+.nav-reserve{background:var(--terra);color:white!important;padding:0.65rem 1.6rem;letter-spacing:0.1em!important;transition:background 0.2s!important}
+.nav-reserve:hover{background:var(--terra2)!important}
+
+/* HERO — full bleed cinematic */
+.hero{min-height:100vh;position:relative;display:flex;align-items:flex-end;padding:0 3.5rem 5rem;overflow:hidden}
+.hero-bg{position:absolute;inset:0;background:url('https://images.pexels.com/photos/1267320/pexels-photo-1267320.jpeg?auto=compress&cs=tinysrgb&w=1800') center/cover}
+.hero-grad{position:absolute;inset:0;background:linear-gradient(to top,rgba(14,10,6,0.97) 0%,rgba(14,10,6,0.6) 40%,rgba(14,10,6,0.2) 100%)}
+.hero-content{position:relative;z-index:1;width:100%;display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:flex-end}
+.hero-left{}
+.hero-tag{font-size:0.68rem;letter-spacing:0.3em;text-transform:uppercase;color:var(--gold);margin-bottom:1.5rem;display:flex;align-items:center;gap:0.75rem}
+.hero-tag::before{content:'';width:2rem;height:1px;background:var(--gold)}
+.hero-h1{font-family:var(--serif);font-size:clamp(4rem,7vw,7.5rem);font-weight:900;line-height:0.9;color:var(--cream);letter-spacing:-0.04em;margin-bottom:2rem}
+.hero-h1 em{color:var(--terra);font-style:italic;display:block}
+.hero-sub{font-size:0.92rem;color:var(--mid);line-height:1.9;max-width:28rem;margin-bottom:2.5rem}
+.btn-terra{background:var(--terra);color:white;padding:1rem 2.5rem;font-size:0.8rem;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;text-decoration:none;border:none;cursor:pointer;font-family:var(--sans);transition:all 0.25s;display:inline-flex;align-items:center;gap:0.75rem}
+.btn-terra:hover{background:var(--terra2);transform:translateY(-2px)}
+.btn-outline{border:1px solid rgba(242,228,200,0.3);color:var(--sand);padding:1rem 2rem;font-size:0.8rem;font-weight:400;letter-spacing:0.1em;text-transform:uppercase;text-decoration:none;display:inline-flex;align-items:center;gap:0.75rem;transition:all 0.25s;background:transparent}
+.btn-outline:hover{border-color:var(--gold);color:var(--gold)}
+.hero-right{text-align:right;padding-bottom:0.5rem}
+.hero-hours{margin-bottom:2rem}
+.hero-hours-label{font-size:0.65rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--dim);margin-bottom:0.75rem}
+.hero-hours-day{font-family:var(--serif);font-size:1.05rem;font-weight:300;color:var(--sand);margin-bottom:0.2rem}
+.hero-hours-day span{color:var(--gold)}
+.hero-location{font-size:0.78rem;color:var(--dim);letter-spacing:0.05em;line-height:1.8}
+
+/* VIBE STRIP */
+.vibe{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid rgba(201,149,42,0.15);border-bottom:1px solid rgba(201,149,42,0.15)}
+.vibe-item{padding:2.5rem 2rem;border-right:1px solid rgba(201,149,42,0.1);text-align:center;transition:background 0.3s;cursor:default}
+.vibe-item:last-child{border-right:none}
+.vibe-item:hover{background:rgba(201,149,42,0.05)}
+.vibe-icon{font-size:1.5rem;margin-bottom:0.75rem;display:block}
+.vibe-label{font-size:0.7rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--gold);font-weight:500}
+
+/* ABOUT */
+.about{padding:8rem 3.5rem;display:grid;grid-template-columns:1fr 1fr;gap:8rem;align-items:center;background:var(--deep)}
+.about-label{font-size:0.68rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--terra);margin-bottom:1.5rem}
+.about h2{font-family:var(--serif);font-size:clamp(2.5rem,4vw,4rem);font-weight:700;line-height:1.05;color:var(--cream);margin-bottom:2rem;letter-spacing:-0.02em}
+.about h2 em{color:var(--gold);font-style:italic}
+.about p{font-size:0.92rem;color:var(--mid);line-height:2;margin-bottom:1.5rem}
+.about-details{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-top:2.5rem;padding-top:2.5rem;border-top:1px solid rgba(201,149,42,0.15)}
+.detail{display:flex;flex-direction:column;gap:0.3rem}
+.detail-label{font-size:0.65rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--dim)}
+.detail-val{font-family:var(--serif);font-size:1rem;font-weight:700;color:var(--gold)}
+.about-img-wrap{position:relative;height:600px}
+.about-img-wrap img{width:100%;height:100%;object-fit:cover}
+.about-img-over{position:absolute;bottom:2rem;right:-1.5rem;background:var(--terra);padding:2rem;max-width:200px}
+.about-img-over .big{font-family:var(--serif);font-size:2.8rem;font-weight:900;line-height:1;color:white;display:block}
+.about-img-over .sm{font-size:0.7rem;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.8);margin-top:0.25rem;display:block;line-height:1.5}
+
+/* MENU */
+.menu{padding:8rem 3.5rem;background:var(--night)}
+.menu-header{text-align:center;margin-bottom:5rem}
+.menu-header h2{font-family:var(--serif);font-size:clamp(2.5rem,4vw,4rem);font-weight:900;color:var(--cream);letter-spacing:-0.02em;margin-bottom:0.5rem}
+.menu-header p{font-size:0.85rem;color:var(--dim);letter-spacing:0.1em;text-transform:uppercase}
+.menu-tabs{display:flex;justify-content:center;gap:0;margin-bottom:4rem;border:1px solid rgba(201,149,42,0.2)}
+.menu-tab{padding:0.85rem 2.5rem;font-size:0.72rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--dim);cursor:pointer;transition:all 0.2s;border-right:1px solid rgba(201,149,42,0.2);background:transparent;font-family:var(--sans)}
+.menu-tab:last-child{border-right:none}
+.menu-tab.active,.menu-tab:hover{background:var(--terra);color:white}
+.menu-grid{display:grid;grid-template-columns:1fr 1fr;gap:0}
+.menu-item{padding:2rem 2.5rem;border-bottom:1px solid rgba(201,149,42,0.1);border-right:1px solid rgba(201,149,42,0.1);display:flex;justify-content:space-between;align-items:start;gap:2rem;transition:background 0.2s;cursor:default}
+.menu-item:nth-child(2n){border-right:none}
+.menu-item:hover{background:rgba(201,149,42,0.04)}
+.menu-item-info h3{font-family:var(--serif);font-size:1.1rem;font-weight:700;color:var(--cream);margin-bottom:0.3rem}
+.menu-item-info p{font-size:0.8rem;color:var(--dim);line-height:1.7;max-width:22rem}
+.menu-item-info .tag{display:inline-block;font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--terra);margin-top:0.5rem;border:1px solid rgba(196,87,42,0.3);padding:0.2rem 0.5rem}
+.menu-price{font-family:var(--serif);font-size:1.2rem;font-weight:700;color:var(--gold);white-space:nowrap;padding-top:0.2rem}
+
+/* EVENTS */
+.events{padding:8rem 3.5rem;background:var(--warm)}
+.events-head{display:grid;grid-template-columns:1fr 1fr;gap:6rem;margin-bottom:5rem;align-items:end}
+.events-head h2{font-family:var(--serif);font-size:clamp(2.5rem,4vw,4rem);font-weight:900;color:var(--cream);letter-spacing:-0.02em;line-height:1}
+.events-head h2 em{color:var(--gold);font-style:italic;display:block}
+.events-head p{font-size:0.88rem;color:var(--mid);line-height:1.9}
+.events-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(201,149,42,0.1)}
+.event-card{background:var(--warm);padding:2.5rem;transition:background 0.3s;cursor:pointer}
+.event-card:hover{background:rgba(201,149,42,0.08)}
+.event-day{font-family:var(--serif);font-size:3rem;font-weight:900;color:var(--terra);line-height:1;margin-bottom:0.2rem}
+.event-month{font-size:0.65rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--dim);margin-bottom:1.5rem}
+.event-name{font-family:var(--serif);font-size:1.3rem;font-weight:700;color:var(--cream);margin-bottom:0.5rem;line-height:1.2}
+.event-who{font-size:0.8rem;color:var(--gold);margin-bottom:0.5rem;letter-spacing:0.05em}
+.event-desc{font-size:0.8rem;color:var(--mid);line-height:1.8}
+.event-time{display:inline-block;margin-top:1rem;font-size:0.68rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--terra);border-top:1px solid rgba(196,87,42,0.3);padding-top:0.75rem;width:100%}
+
+/* GALLERY */
+.gallery{display:grid;grid-template-columns:2fr 1fr 1fr;grid-template-rows:300px 300px;gap:3px;background:var(--night)}
+.gal{overflow:hidden;position:relative}
+.gal img{width:100%;height:100%;object-fit:cover;transition:transform 0.6s;filter:brightness(0.85)}
+.gal:hover img{transform:scale(1.05);filter:brightness(1)}
+.gal.tall{grid-row:span 2}
+.gal-label{position:absolute;bottom:1.25rem;left:1.25rem;font-size:0.65rem;letter-spacing:0.15em;text-transform:uppercase;color:rgba(242,228,200,0.65);background:rgba(14,10,6,0.6);backdrop-filter:blur(4px);padding:0.35rem 0.75rem}
+
+/* RESERVE */
+.reserve{padding:8rem 3.5rem;background:var(--deep);display:grid;grid-template-columns:1fr 1fr;gap:8rem;align-items:start}
+.reserve-copy h2{font-family:var(--serif);font-size:clamp(2.5rem,4vw,4rem);font-weight:900;color:var(--cream);letter-spacing:-0.02em;line-height:1.05;margin-bottom:1.5rem}
+.reserve-copy h2 em{color:var(--terra);font-style:italic;display:block}
+.reserve-copy p{font-size:0.9rem;color:var(--mid);line-height:2;margin-bottom:2rem}
+.reserve-contact{display:flex;flex-direction:column;gap:1rem;margin-top:2rem}
+.contact-line{display:flex;align-items:center;gap:1rem;font-size:0.85rem;color:var(--mid);text-decoration:none;transition:color 0.2s;border-bottom:1px solid rgba(201,149,42,0.1);padding-bottom:1rem}
+.contact-line:last-child{border-bottom:none}
+.contact-line:hover{color:var(--gold)}
+.contact-line span:first-child{font-size:1.1rem;width:2rem;text-align:center}
+.reserve-form{background:rgba(255,255,255,0.03);border:1px solid rgba(201,149,42,0.15);padding:3rem}
+.reserve-form h3{font-family:var(--serif);font-size:1.4rem;font-weight:700;color:var(--cream);margin-bottom:2rem;padding-bottom:1.5rem;border-bottom:1px solid rgba(201,149,42,0.15)}
+.field{display:flex;flex-direction:column;gap:0.4rem;margin-bottom:1.5rem}
+.field label{font-size:0.65rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--dim)}
+.field input,.field select,.field textarea{background:rgba(255,255,255,0.04);border:1px solid rgba(201,149,42,0.15);padding:0.85rem 1rem;font-size:0.88rem;font-family:var(--sans);font-weight:300;color:var(--sand);outline:none;transition:border-color 0.2s}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--gold)}
+.field input::placeholder,.field textarea::placeholder{color:var(--dim)}
+.field select option{background:var(--deep)}
+.field-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.field textarea{resize:vertical;min-height:80px;line-height:1.7}
+.form-submit{width:100%;background:var(--terra);color:white;border:none;padding:1.1rem;font-size:0.78rem;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;cursor:pointer;font-family:var(--sans);transition:background 0.25s;margin-top:0.5rem}
+.form-submit:hover{background:var(--terra2)}
+
+/* FOOTER */
+footer{background:var(--night);padding:5rem 3.5rem 3rem;border-top:1px solid rgba(201,149,42,0.1)}
+.footer-top{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:4rem;padding-bottom:4rem;border-bottom:1px solid rgba(201,149,42,0.1);margin-bottom:3rem}
+.footer-brand{font-family:var(--serif);font-size:1.5rem;font-weight:700;color:var(--sand);margin-bottom:0.25rem}
+.footer-brand span{color:var(--terra)}
+.footer-tagline{font-size:0.82rem;color:var(--dim);line-height:1.8;max-width:22rem;margin-bottom:1.5rem}
+.footer-hours{font-size:0.78rem;color:var(--mid);line-height:2}
+.footer-hours strong{color:var(--gold);font-weight:500}
+.footer-col h4{font-size:0.65rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--terra);margin-bottom:1.25rem;font-weight:500}
+.footer-col a{display:block;font-size:0.82rem;color:var(--dim);text-decoration:none;margin-bottom:0.65rem;transition:color 0.2s}
+.footer-col a:hover{color:var(--gold)}
+.footer-bottom{display:flex;justify-content:space-between;align-items:center;font-size:0.72rem}
+.footer-copy{color:rgba(242,228,200,0.2)}
+.footer-ig{color:var(--gold);text-decoration:none;font-size:0.72rem;letter-spacing:0.1em;border-bottom:1px solid rgba(201,149,42,0.3);padding-bottom:0.1rem;transition:color 0.2s}
+.footer-ig:hover{color:var(--terra)}
+</style>
+</head>
+<body>
+
+<nav id="nav">
+  <a href="#" class="nav-logo">Rift<span>.</span>Social</a>
+  <div class="nav-links">
+    <a href="#about">About</a>
+    <a href="#menu">Menu</a>
+    <a href="#events">Events</a>
+    <a href="#reserve" class="nav-reserve">Reserve a Table</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grad"></div>
+  <div class="hero-content">
+    <div class="hero-left">
+      <div class="hero-tag">Westlands · Nairobi</div>
+      <h1 class="hero-h1">Where Nairobi<br><em>Comes Alive</em></h1>
+      <p class="hero-sub">Rooftop lounge and cocktail bar above the city. Craft drinks, live sets, and the kind of nights you never plan but never forget.</p>
+      <div style="display:flex;gap:1rem;flex-wrap:wrap">
+        <a href="#reserve" class="btn-terra">Reserve Your Table →</a>
+        <a href="#menu" class="btn-outline">View Menu</a>
+      </div>
+    </div>
+    <div class="hero-right">
+      <div class="hero-hours">
+        <div class="hero-hours-label">Opening Hours</div>
+        <div class="hero-hours-day">Tuesday – Thursday <span>5PM – 1AM</span></div>
+        <div class="hero-hours-day">Friday – Saturday <span>4PM – 3AM</span></div>
+        <div class="hero-hours-day">Sunday <span>12PM – 10PM</span></div>
+      </div>
+      <div class="hero-location">📍 Mpaka Road, Westlands<br>5th Floor · Above Java House<br>Nairobi, Kenya</div>
+    </div>
+  </div>
+</section>
+
+<!-- VIBE STRIP -->
+<div class="vibe">
+  <div class="vibe-item"><span class="vibe-icon">🍹</span><div class="vibe-label">Craft Cocktails</div></div>
+  <div class="vibe-item"><span class="vibe-icon">🎵</span><div class="vibe-label">Live DJ Sets</div></div>
+  <div class="vibe-item"><span class="vibe-icon">🌆</span><div class="vibe-label">Rooftop Views</div></div>
+  <div class="vibe-item"><span class="vibe-icon">🍽️</span><div class="vibe-label">Sharing Plates</div></div>
+</div>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div>
+    <div class="about-label">The Story</div>
+    <h2>Built for the <em>Long Night</em></h2>
+    <p>Rift Social opened its doors in 2019 with a simple idea: Nairobi deserved a space that felt like it was designed for Nairobi. Not imported from somewhere else. Not trying to be Shoreditch or SoHo. Ours.</p>
+    <p>Five floors up with the city spread below you, a bar programme built around East African botanicals and spirits, and a sound system that respects the music — Rift Social is the room you've been looking for.</p>
+    <div class="about-details">
+      <div class="detail"><div class="detail-label">Capacity</div><div class="detail-val">180 Guests</div></div>
+      <div class="detail"><div class="detail-label">Private Hire</div><div class="detail-val">Full & Partial</div></div>
+      <div class="detail"><div class="detail-label">Minimum Spend</div><div class="detail-val">From Ksh 3,000</div></div>
+      <div class="detail"><div class="detail-label">Happy Hour</div><div class="detail-val">Tue–Thu 5–7PM</div></div>
+    </div>
+  </div>
+  <div class="about-img-wrap">
+    <img src="https://images.pexels.com/photos/274192/pexels-photo-274192.jpeg?auto=compress&cs=tinysrgb&w=900" alt="Rift Social Interior">
+    <div class="about-img-over">
+      <span class="big">#1</span>
+      <span class="sm">Rooftop Bar<br>Westlands 2023–24</span>
+    </div>
+  </div>
+</section>
+
+<!-- MENU -->
+<section class="menu" id="menu">
+  <div class="menu-header">
+    <h2>Drink. Eat. Repeat.</h2>
+    <p>Signature cocktails · East African bites · Import spirits</p>
+  </div>
+  <div class="menu-tabs">
+    <button class="menu-tab active" onclick="setTab(this,'cocktails')">Cocktails</button>
+    <button class="menu-tab" onclick="setTab(this,'spirits')">Spirits & Wine</button>
+    <button class="menu-tab" onclick="setTab(this,'bites')">Bites</button>
+  </div>
+  <div class="menu-grid" id="menu-cocktails">
+    <div class="menu-item"><div class="menu-item-info"><h3>The Rift Valley</h3><p>Kenyan gin, hibiscus, passion fruit, lime, honey syrup</p><span class="tag">Signature</span></div><div class="menu-price">Ksh 1,200</div></div>
+    <div class="menu-item"><div class="menu-item-info"><h3>Nairobi Smoke</h3><p>Mezcal, smoked paprika, tamarind, mango, chilli salt rim</p><span class="tag">Bestseller</span></div><div class="menu-price">Ksh 1,400</div></div>
+    <div class="menu-item"><div class="menu-item-info"><h3>Safari Sunset</h3><p>Amarula, vanilla vodka, fresh orange, grenadine float</p></div><div class="menu-price">Ksh 1,100</div></div>
+    <div class="menu-item"><div class="menu-item-info"><h3>Rooftop Old Fashioned</h3><p>Bourbon, bitters, demerara, torched orange peel</p><span class="tag">Classic</span></div><div class="menu-price">Ksh 1,350</div></div>
+    <div class="menu-item"><div class="menu-item-info"><h3>Baobab Spritz</h3><p>Baobab powder, elderflower, prosecco, fresh mint, cucumber</p></div><div class="menu-price">Ksh 1,200</div></div>
+    <div class="menu-item"><div class="menu-item-info"><h3>East African Negroni</h3><p>Uganda waragi, Campari, sweet vermouth, cardamom bitters</p><span class="tag">House Mix</span></div><div class="menu-price">Ksh 1,300</div></div>
+  </div>
+</section>
+
+<!-- EVENTS -->
+<section class="events" id="events">
+  <div class="events-head">
+    <h2>What's On at<br><em>Rift</em></h2>
+    <p>Live DJs every Friday and Saturday. Monthly residencies. Curated events. The kind of line-up that justifies the cab home.</p>
+  </div>
+  <div class="events-grid">
+    <div class="event-card">
+      <div class="event-day">28</div>
+      <div class="event-month">March 2026</div>
+      <div class="event-name">ALTITUDE — Monthly Rooftop Rave</div>
+      <div class="event-who">DJ Naijamix + Special Guest TBA</div>
+      <div class="event-desc">Afro house, Amapiano, and the Nairobi skyline. Doors 9PM. Smart casual. Advance tickets Ksh 500.</div>
+      <div class="event-time">Friday · 9PM – 3AM · Ksh 500 advance</div>
+    </div>
+    <div class="event-card">
+      <div class="event-day">04</div>
+      <div class="event-month">April 2026</div>
+      <div class="event-name">Jazz & Sundowners</div>
+      <div class="event-who">The Nairobi Jazz Collective</div>
+      <div class="event-desc">Rooftop jazz as the sun goes down over Westlands. Sharing plates, wine, and the best view in the city.</div>
+      <div class="event-time">Sunday · 4PM – 9PM · Free entry</div>
+    </div>
+    <div class="event-card">
+      <div class="event-day">10</div>
+      <div class="event-month">April 2026</div>
+      <div class="event-name">FREQUENCY — R&B Night</div>
+      <div class="event-who">DJ Safi + DJ Amara</div>
+      <div class="event-desc">Old school R&B, neo-soul, and afrobeats. A night for the ones who know. Table bookings strongly advised.</div>
+      <div class="event-time">Friday · 9PM – 3AM · Ksh 500 advance</div>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<div class="gallery">
+  <div class="gal tall"><img src="https://images.pexels.com/photos/1267320/pexels-photo-1267320.jpeg?auto=compress&cs=tinysrgb&w=900" alt="Bar"><div class="gal-label">The Bar</div></div>
+  <div class="gal"><img src="https://images.pexels.com/photos/3407777/pexels-photo-3407777.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Cocktails"><div class="gal-label">Signature Cocktails</div></div>
+  <div class="gal"><img src="https://images.pexels.com/photos/787961/pexels-photo-787961.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Night"><div class="gal-label">Friday Nights</div></div>
+  <div class="gal"><img src="https://images.pexels.com/photos/1304469/pexels-photo-1304469.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Lounge"><div class="gal-label">Rooftop Lounge</div></div>
+  <div class="gal"><img src="https://images.pexels.com/photos/1640772/pexels-photo-1640772.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Food"><div class="gal-label">Sharing Plates</div></div>
+</div>
+
+<!-- RESERVE -->
+<section class="reserve" id="reserve">
+  <div class="reserve-copy">
+    <h2>Make It<br><em>A Night</em></h2>
+    <p>Table reservations recommended on weekends. We hold bookings for 15 minutes after your time — arrive a little early, stay very late.</p>
+    <p>For private hire, birthday packages, or corporate bookings, reach us directly on WhatsApp for faster response.</p>
+    <div class="reserve-contact">
+      <a href="https://wa.me/254700000000" class="contact-line"><span>💬</span><span>WhatsApp Reservations: +254 700 000 000</span></a>
+      <a href="tel:+254700000000" class="contact-line"><span>📞</span><span>Call the Bar: +254 700 000 000</span></a>
+      <div class="contact-line"><span>📍</span><span>Mpaka Road, Westlands · 5th Floor</span></div>
+      <div class="contact-line"><span>🚗</span><span>Valet parking available · Ksh 200</span></div>
+    </div>
+  </div>
+  <div class="reserve-form">
+    <h3>Reserve Online</h3>
+    <div class="field-row">
+      <div class="field"><label>Name</label><input type="text" id="fName" placeholder="Your name"></div>
+      <div class="field"><label>Phone / WhatsApp</label><input type="tel" id="fPhone" placeholder="+254 7XX XXX XXX"></div>
+    </div>
+    <div class="field-row">
+      <div class="field"><label>Date</label><input type="date"></div>
+      <div class="field"><label>Time</label>
+        <select>
+          <option value="">Preferred time</option>
+          <option>5:00 PM</option><option>6:00 PM</option><option>7:00 PM</option>
+          <option>8:00 PM</option><option>9:00 PM</option><option>10:00 PM</option>
+        </select>
+      </div>
+    </div>
+    <div class="field-row">
+      <div class="field"><label>Party Size</label>
+        <select>
+          <option value="">Guests</option>
+          <option>1–2</option><option>3–4</option><option>5–6</option>
+          <option>7–10</option><option>10+</option>
+        </select>
+      </div>
+      <div class="field"><label>Occasion</label>
+        <select>
+          <option value="">Select</option>
+          <option>Date night</option><option>Birthday</option>
+          <option>Corporate</option><option>Just vibes</option>
+        </select>
+      </div>
+    </div>
+    <div class="field"><label>Special Requests</label><textarea placeholder="Dietary requirements, decorations, VIP package..."></textarea></div>
+    <button class="form-submit" id="fBtn" onclick="submitEnq()">Request Reservation →</button>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div>
+      <div class="footer-brand">Rift<span>.</span>Social</div>
+      <p class="footer-tagline">Nairobi's rooftop bar & lounge. Westlands. Craft cocktails, live music, and the city below your feet.</p>
+      <div class="footer-hours"><strong>Tuesday–Thursday</strong> 5PM – 1AM<br><strong>Friday–Saturday</strong> 4PM – 3AM<br><strong>Sunday</strong> 12PM – 10PM<br>Monday: Closed</div>
+    </div>
+    <div class="footer-col"><h4>The Bar</h4><a href="#">Menu</a><a href="#">Cocktail List</a><a href="#">Wine & Spirits</a><a href="#">Happy Hour</a></div>
+    <div class="footer-col"><h4>Events</h4><a href="#">What's On</a><a href="#">Private Hire</a><a href="#">Corporate</a><a href="#">Birthdays</a></div>
+    <div class="footer-col"><h4>Find Us</h4><a href="#">Mpaka Road, Westlands</a><a href="#">5th Floor</a><a href="tel:+254700000000">+254 700 000 000</a><a href="#">@riftsocial.nbi</a></div>
+  </div>
+  <div class="footer-bottom">
+    <span class="footer-copy">© 2025 Rift Social Ltd · Westlands, Nairobi · Responsible drinking ·  18+</span>
+    <a href="#" class="footer-ig">Instagram @riftsocial.nbi</a>
+  </div>
+</footer>
+
+<script>
+window.addEventListener('scroll', () => {
+  document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 60);
+});
+function setTab(el, tab) {
+  document.querySelectorAll('.menu-tab').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+}
+</script>
+
+<script>
+async function submitEnq(){
+  var n=document.getElementById('fName')?.value.trim()||'',e=document.getElementById('fEmail')?.value.trim()||'',p=document.getElementById('fPhone')?.value.trim()||'';
+  if(!n){showSt('Please enter your name.','#8b0000','#fff0ee');return;}
+  var btn=document.getElementById('fBtn');btn.disabled=true;
+  try{var res=await fetch('/api/enquire',{method:'POST',headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({name:n,email:e,phone:p,siteName:'Rift Social',whatsappNumber:'254700000000'})
+  });
+  var d=res.ok?await res.json():{success:true,whatsappUrl:'https://wa.me/254700000000'};
+  showSt('✅ Booking received! We\'ll confirm via WhatsApp shortly.','#1a3a1a','#f0f8f0');if(d.whatsappUrl){var wa=document.getElementById('fWa');wa.href=d.whatsappUrl;wa.style.display='block';}
+  btn.textContent='Sent ✓';}
+  catch{btn.disabled=false;showSt('Something went wrong. Please contact us directly.','#8b0000','#fff0ee');}
+}
+function showSt(m,c,bg){var e=document.getElementById('fStatus');e.textContent=m;e.style.cssText='display:block;background:'+bg+';color:'+c+';border:1px solid '+c+';padding:.85rem 1rem;font-size:.82rem;margin-top:.75rem';}
+</script>
+</body>
+</html>
